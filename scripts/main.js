@@ -28,7 +28,6 @@ function displayLibrary() {
     myLibrary.forEach(book => {
         const bookDisplay = document.createElement('p');
         bookDisplay.classList.add('book-card');
-        bookDisplay.style.whiteSpace ="pre"
         bookDisplay.textContent = `Title:  ${book.title}\nAuthor: ${book.author}\nPages: ${book.pages}\nRead: ${book.read}`;
         display.appendChild(bookDisplay);
     });

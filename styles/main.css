@@ -1,9 +1,10 @@
 .book-card {
-    background-color: aquamarine;
+    background-color: rgb(209, 219, 216);
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-
+    white-space: pre;
+    padding: 15px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -17,4 +18,13 @@
 
 .book-entry-form {
     display: none;
+    background-color: rgb(209, 219, 216);
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding: 5px;
+}
+
+#new-book-form {
+    padding: 2px 16px;
 }
