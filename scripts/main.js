@@ -68,3 +68,10 @@ const addBookBtn = document.querySelector("#add-book");
 addBookBtn.addEventListener('click', () => {
     addBook();
 });
+
+const bookEntryBtn = document.getElementById("submit");
+
+bookEntryBtn.addEventListener('submit', (event) => {
+    const book = document.getElementById('book-entry-form');
+    console.log(book.elements['title']);
+});
