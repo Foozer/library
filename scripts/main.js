@@ -69,9 +69,15 @@ addBookBtn.addEventListener('click', () => {
     addBook();
 });
 
-const bookEntryBtn = document.getElementById("submit");
+const title = document.querySelector('#title');
+const author = document.querySelector('#author');
+const pages = document.querySelector('#pages');
+const read = document.querySelector('#read');
 
-bookEntryBtn.addEventListener('submit', (event) => {
-    const book = document.getElementById('book-entry-form');
-    console.log(book.elements['title']);
+bookEntryForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const newBook = new Book(title.value, author.value, pages.value, false);
+    addBookToLibrary(newBook);
+    console.log(title.value, author.value, pages.value, read.value);
+    
 });

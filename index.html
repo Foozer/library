@@ -13,7 +13,7 @@
         </div>
         <div id="display"></div>
         <div id="new-book-form">
-            <form class="book-entry-form">
+            <form class="book-entry-form" method="post" id="book-form">
                 <ul>
                     <li>
                         <label for="title">Title:</label>
@@ -32,7 +32,7 @@
                     </li>
                     <li>
                         <label for="read">Read?:</label>
-                        <input type="checkbox" id="read" name="book_read">
+                        <input type="checkbox" id="read" name="book_read" value="true">
                     </li>
                     <button id="submit" type="submit">Submit new book</button>
                 </ul>
