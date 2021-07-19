@@ -16,6 +16,15 @@ function Book(title, author, pages, read) {
         }
         return(`${title} by ${author}, ${pages} pages, ${readText}.`)
     }
+    this.bookRead = function() {
+        let readText = ''
+        if (!read) {
+            readText = 'not read yet'
+        } else {
+            readText = 'read'
+        }
+        return readText
+    }
 }
 
 function addBookToLibrary(book) {
@@ -28,7 +37,7 @@ function displayLibrary() {
     myLibrary.forEach(book => {
         const bookDisplay = document.createElement('p');
         bookDisplay.classList.add('book-card');
-        bookDisplay.textContent = `Title:  ${book.title}\nAuthor: ${book.author}\nPages: ${book.pages}\nRead: ${book.read}`;
+        bookDisplay.textContent = `Title:  ${book.title}\nAuthor: ${book.author}\nPages: ${book.pages}\nRead: ${book.bookRead()}`;
         display.appendChild(bookDisplay);
     });
 }
@@ -76,8 +85,8 @@ const read = document.querySelector('#read');
 
 bookEntryForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const newBook = new Book(title.value, author.value, pages.value, false);
+    const newBook = new Book(title.value, author.value, pages.value, read.checked);
     addBookToLibrary(newBook);
-    console.log(title.value, author.value, pages.value, read.value);
+    console.log(title.value, author.value, pages.value, read.checked);
     
 });
