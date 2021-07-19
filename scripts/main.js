@@ -1,27 +1,18 @@
 let myLibrary = [];
 const display = document.querySelector('#display');
-const bookEntryForm = document.querySelector('.book-entry-form');
+const form = document.querySelector('.book-entry-form');
 
 function Book(title, author, pages, read) {
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
-    this.info = function() {
-        let readText = ''
-        if (!read) {
-            readText = 'not read yet'
-        } else {
-            readText = 'read'
-        }
-        return(`${title} by ${author}, ${pages} pages, ${readText}.`)
-    }
     this.bookRead = function() {
         let readText = ''
         if (!read) {
-            readText = 'not read yet'
+            readText = 'Not read yet'
         } else {
-            readText = 'read'
+            readText = 'Read'
         }
         return readText
     }
@@ -33,7 +24,7 @@ function addBookToLibrary(book) {
 
 function displayLibrary() {
     clearCurrentDisplay();
-    bookEntryForm.style.display = "none";
+    form.style.display = "none";
     myLibrary.forEach(book => {
         const bookDisplay = document.createElement('p');
         bookDisplay.classList.add('book-card');
@@ -52,7 +43,7 @@ function clearCurrentDisplay() {
 
 function addBook() {
     clearCurrentDisplay();
-    bookEntryForm.style.display = "block";
+    form.style.display = "block";
 }
 
 
@@ -83,10 +74,47 @@ const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
 const read = document.querySelector('#read');
 
-bookEntryForm.addEventListener('submit', (event) => {
+form.addEventListener('submit', (event) => {
     event.preventDefault();
     const newBook = new Book(title.value, author.value, pages.value, read.checked);
     addBookToLibrary(newBook);
     console.log(title.value, author.value, pages.value, read.checked);
-    
+    //form.submit();
 });
+
+
+/*if (storageAvailable('localStorage')) {
+    localStorage.setItem('bookLibrary', myLibrary);
+    console.log(localStorage.getItem('bookLibrary'))
+} else {
+    console.log('no');
+}*/
+
+
+
+
+//local storage
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
