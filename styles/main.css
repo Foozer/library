@@ -5,11 +5,14 @@
     transition: 0.3s;
     white-space: pre;
     padding: 15px;
+    min-width: 250px;
+    max-width: 350px;
 }
 
 /* On mouse-over, add a deeper shadow */
 .book-card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    
 }
 
 #display {

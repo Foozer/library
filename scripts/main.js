@@ -19,18 +19,45 @@ function Book(title, author, pages, read) {
 }
 
 function addBookToLibrary(book) {
-    myLibrary.push(book);
+    myLibrary.push(book);    
 }
 
 function displayLibrary() {
     clearCurrentDisplay();
     form.style.display = "none";
-    myLibrary.forEach(book => {
+    for (let i = 0; i < myLibrary.length; i++) {
         const bookDisplay = document.createElement('p');
         bookDisplay.classList.add('book-card');
-        bookDisplay.textContent = `Title:  ${book.title}\nAuthor: ${book.author}\nPages: ${book.pages}\nRead: ${book.bookRead()}`;
+        bookDisplay.textContent = `Title:  ${myLibrary[i].title}\nAuthor: ${myLibrary[i].author}\nPages: ${myLibrary[i].pages}\nRead: ${myLibrary[i].bookRead()}\n`;
         display.appendChild(bookDisplay);
-    });
+        const bookDeleteBtn = document.createElement('button');
+        bookDeleteBtn.dataset.index = i;
+        bookDeleteBtn.textContent = 'Delete';
+        bookDeleteBtn.classList.add('delete-button');
+        bookDisplay.appendChild(bookDeleteBtn);
+        console.log(bookDeleteBtn.dataset.index);
+    }
+    deleteButton();
+}
+
+function deleteButton() {
+    const deleteBtn = document.querySelectorAll('.delete-button')
+    if (deleteBtn) {
+        deleteBtn.forEach(function(button) {
+            button.addEventListener('click', () => {
+                console.log('hello');
+                console.log(button.dataset.index);
+                deleteBookFromLibrary(button.dataset.index);
+            });
+        })
+    } else {
+        console.log('whatever');
+    }
+}
+
+function deleteBookFromLibrary(bookIndex) {
+    myLibrary.splice(bookIndex, 1);
+    displayLibrary();
 }
 
 function clearCurrentDisplay() {
@@ -81,17 +108,6 @@ form.addEventListener('submit', (event) => {
     console.log(title.value, author.value, pages.value, read.checked);
     //form.submit();
 });
-
-
-/*if (storageAvailable('localStorage')) {
-    localStorage.setItem('bookLibrary', myLibrary);
-    console.log(localStorage.getItem('bookLibrary'))
-} else {
-    console.log('no');
-}*/
-
-
-
 
 //local storage
 function storageAvailable(type) {
