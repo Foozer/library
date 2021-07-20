@@ -35,7 +35,6 @@ function displayLibrary() {
         bookDeleteBtn.textContent = 'Delete';
         bookDeleteBtn.classList.add('delete-button');
         bookDisplay.appendChild(bookDeleteBtn);
-        console.log(bookDeleteBtn.dataset.index);
     }
     deleteButton();
 }
@@ -45,13 +44,9 @@ function deleteButton() {
     if (deleteBtn) {
         deleteBtn.forEach(function(button) {
             button.addEventListener('click', () => {
-                console.log('hello');
-                console.log(button.dataset.index);
                 deleteBookFromLibrary(button.dataset.index);
             });
         })
-    } else {
-        console.log('whatever');
     }
 }
 
@@ -105,7 +100,6 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
     const newBook = new Book(title.value, author.value, pages.value, read.checked);
     addBookToLibrary(newBook);
-    console.log(title.value, author.value, pages.value, read.checked);
     //form.submit();
 });
 
