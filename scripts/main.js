@@ -35,8 +35,16 @@ function displayLibrary() {
         bookDeleteBtn.textContent = 'Delete';
         bookDeleteBtn.classList.add('delete-button');
         bookDisplay.appendChild(bookDeleteBtn);
+        if(myLibrary[i].bookRead() === 'Not read yet') {
+            const toggleReadBtn = document.createElement('button');
+            toggleReadBtn.dataset.index = i;
+            toggleReadBtn.textContent = 'Mark as read';
+            toggleReadBtn.classList.add('toggle-read-button');
+            bookDisplay.appendChild(toggleReadBtn);
+        }
     }
     deleteButton();
+    markAsReadButton();
 }
 
 function deleteButton() {
@@ -55,6 +63,25 @@ function deleteBookFromLibrary(bookIndex) {
     displayLibrary();
 }
 
+function markAsReadButton() {
+    const markAsReadBtn = document.querySelectorAll('.toggle-read-button');
+    if (markAsReadBtn) {
+        markAsReadBtn.forEach(function(button) {
+            button.addEventListener('click', () => {
+                changeBookReadStatus(button.dataset.index);
+            });
+        })
+    }
+}
+
+function changeBookReadStatus(bookIndex) {
+    myLibrary[bookIndex].read = true;
+    console.log(myLibrary[bookIndex].read);
+    displayLibrary();
+}
+
+
+
 function clearCurrentDisplay() {
     let bookDisplay = display.lastElementChild;
     while (bookDisplay) {
@@ -70,9 +97,9 @@ function addBook() {
 
 
 const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', false);
-const lotr = new Book('The Lord of the Rings', 'J.R.R. Tolkien', '1004', false);
+const lotr = new Book('The Lord of the Rings', 'J.R.R. Tolkien', '1004', true);
 const foundation = new Book('Foundation', 'Isaac Asimov', '234', false);
-const theQueensGambit = new Book('The Queens Gambit', 'Walter Tevis', '286', false);
+const theQueensGambit = new Book('The Queens Gambit', 'Walter Tevis', '286', true);
 
 addBookToLibrary(theHobbit);
 addBookToLibrary(lotr);
@@ -96,10 +123,23 @@ const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
 const read = document.querySelector('#read');
 
+function checkIfBookRead() {
+    let bookRead = false;
+    if (read.checked == true) {
+        bookRead = true;
+    }
+    return bookRead;
+}
+
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const newBook = new Book(title.value, author.value, pages.value, read.checked);
+    bookRead = checkIfBookRead();
+    const newBook = new Book(title.value, author.value, pages.value, bookRead);
     addBookToLibrary(newBook);
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    displayLibrary();
     //form.submit();
 });
 
