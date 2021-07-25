@@ -9,12 +9,16 @@ function Book(title, author, pages, read) {
     this.read = read
     this.bookRead = function() {
         let readText = ''
-        if (!read) {
+        if (!this.read) {
             readText = 'Not read yet'
         } else {
             readText = 'Read'
         }
         return readText
+    }
+    this.info = function() {
+        let read = this.bookRead();
+        return `Title:  ${this.title}\nAuthor: ${this.author}\nPages: ${this.pages}\nRead: ${read}\n`
     }
 }
 
@@ -28,14 +32,15 @@ function displayLibrary() {
     for (let i = 0; i < myLibrary.length; i++) {
         const bookDisplay = document.createElement('p');
         bookDisplay.classList.add('book-card');
-        bookDisplay.textContent = `Title:  ${myLibrary[i].title}\nAuthor: ${myLibrary[i].author}\nPages: ${myLibrary[i].pages}\nRead: ${myLibrary[i].bookRead()}\n`;
+        bookDisplay.textContent = myLibrary[i].info();
         display.appendChild(bookDisplay);
         const bookDeleteBtn = document.createElement('button');
         bookDeleteBtn.dataset.index = i;
         bookDeleteBtn.textContent = 'Delete';
         bookDeleteBtn.classList.add('delete-button');
         bookDisplay.appendChild(bookDeleteBtn);
-        if(myLibrary[i].bookRead() === 'Not read yet') {
+        //console.log(myLibrary[i].bookRead());
+        if(myLibrary[i].read === false) {
             const toggleReadBtn = document.createElement('button');
             toggleReadBtn.dataset.index = i;
             toggleReadBtn.textContent = 'Mark as read';
@@ -48,7 +53,7 @@ function displayLibrary() {
 }
 
 function deleteButton() {
-    const deleteBtn = document.querySelectorAll('.delete-button')
+    const deleteBtn = document.querySelectorAll('.delete-button');
     if (deleteBtn) {
         deleteBtn.forEach(function(button) {
             button.addEventListener('click', () => {
@@ -68,6 +73,7 @@ function markAsReadButton() {
     if (markAsReadBtn) {
         markAsReadBtn.forEach(function(button) {
             button.addEventListener('click', () => {
+                console.log(button.dataset.index);
                 changeBookReadStatus(button.dataset.index);
             });
         })
@@ -76,7 +82,7 @@ function markAsReadButton() {
 
 function changeBookReadStatus(bookIndex) {
     myLibrary[bookIndex].read = true;
-    console.log(myLibrary[bookIndex].read);
+    console.log(myLibrary[bookIndex].bookRead());
     displayLibrary();
 }
 
@@ -97,9 +103,9 @@ function addBook() {
 
 
 const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', false);
-const lotr = new Book('The Lord of the Rings', 'J.R.R. Tolkien', '1004', true);
+const lotr = new Book('The Lord of the Rings', 'J.R.R. Tolkien', '1004', false);
 const foundation = new Book('Foundation', 'Isaac Asimov', '234', false);
-const theQueensGambit = new Book('The Queens Gambit', 'Walter Tevis', '286', true);
+const theQueensGambit = new Book('The Queens Gambit', 'Walter Tevis', '286', false);
 
 addBookToLibrary(theHobbit);
 addBookToLibrary(lotr);
